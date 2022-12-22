@@ -8,18 +8,33 @@ const jwt = require('jsonwebtoken')
 
 const app = express()
 
+//Config JSON response, express ler o json 
+
+app.use(express.json())
+
+
 
 // Models
 
-const User = require("./models/User")
+const User = require("./Backend/models/User");
+const Item = require("./Backend/models/Item");
+const routes = require("./Backend/routes/router")
+
 
 // open Route - Public Route
 app.get('/', (req, res) => {
     res.status(200).json({ msg: "Welcome to CANTECO API" })
 })
 
-// Prive route - info user por id
 
+
+
+//                                                          CREATE USER 
+
+
+
+// Prive route - info user por id
+// funcao para fazer rota privada, criando um fun verificando o token
 app.get("/user/:id",checkToken, async (req, res) =>{
     
     const id = req.params.id
@@ -28,15 +43,11 @@ app.get("/user/:id",checkToken, async (req, res) =>{
    
     const user = await User.findById(id, '-password') // exclui a password
 
-    if(!user){
-        return res.status(404).json({msg: 'User not found'})
-    } 
 
     res.status(200).json({ user })
      
 })
 
-// funcao para fazer rota privada, criando um fun verificando o token
 
 // next é sucesso, prossiga 
 
@@ -60,11 +71,6 @@ function checkToken(req, res, next){
 }
 
 
-
-//Config JSON response, express ler o json 
-
-app.use(express.json())
-
 /* Registe User */
 
 app.post('/auth/register', async (req, res) => {
@@ -86,9 +92,7 @@ app.post('/auth/register', async (req, res) => {
         //check if user exists
         if (userExists) {
             return res.status(422).json({ msg: 'Email alredy exists' })
-        } /* else {
-            return res.status(422).json({ msg: 'User not found' })
-        } */
+        } 
 
         // create password 
 
@@ -112,7 +116,7 @@ app.post('/auth/register', async (req, res) => {
         } catch (error) {
             console.log(error);
 
-            res.status(500).json({ msg: 'Aconteceu um erro servidor tente novamente mais tarde!' })
+            res.status(500).json({ msg: 'Servor error. Try again later' })
 
         }
     }
@@ -149,6 +153,7 @@ app.post("/auth/login", async (req, res) => {
         return res.status(422).json({ msg: 'Invalid Password' })
     }
 
+
     //validação auth
     try{
         const secret = process.env.SECRET
@@ -158,28 +163,81 @@ app.post("/auth/login", async (req, res) => {
         }, secret
         )
 
-        res.status(200).json({msg: 'autenticacao feita com sucesso', token})
+        res.status(200).json({msg: 'sucessfully authenticated', token})
 
     }catch (error) {
         console.log(error);
-        res.status(500).json({ msg: 'Aconteceu um erro servidor tente novamente mais tarde!' })
+        res.status(500).json({ msg: 'Servor error. Try again later' })
     }
-
-
-
 })
 
-// credencials
-const dbUser = process.env.DB_USER
-const dbPassword = process.env.DB_PASS
 
 
-mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.5d9r5hl.mongodb.net/?retryWrites=true&w=majority`)
-    .then(() => {
-        app.listen(3000)
-        console.log('conectou a database');
-    })
-    .catch((err) => console.log(err))
 
 
-console.log(123)
+
+
+
+//                                                          CREATE ITENS 
+/* 
+    app.post("/itens/create", async (req, res) => {
+    const { itemName, kcal, image } = req.body
+
+    // validations 
+    if (!itemName) {
+        return res.status(422).json({ msg: "Required itemName" })
+    }
+
+    if (!kcal) {
+        return res.status(422).json({ msg: "Required kcal" })
+    }
+    if (!image) {
+        return res.status(422).json({ msg: "Required image" })
+    }else {
+        const itemExists = await Item.findOne({ itemName: itemName })
+        console.log(itemExists)
+        //check if item exists
+        if (itemExists) {
+            return res.status(422).json({ msg: 'Item alredy exists' })
+        } 
+
+        const item = new Item({
+            itemName,
+            kcal,
+            image,
+        })
+
+        // validação de erro 
+
+        try {
+
+            await item.save()
+
+            res.status(201).json({ msg: 'Item criado com sucesso' })
+
+        } catch (error) {
+            console.log(error);
+
+            res.status(500).json({ msg: 'nao criou nada sua burra' })
+
+        }
+    }
+})
+ */
+
+
+//                                                         DATABASE
+
+const conn = require("./Backend/db/conn");
+
+conn();
+
+app.use('/api',routes);
+
+
+
+
+app.listen(3000, function(){
+    console.log("Servidor online!");
+})
+    
