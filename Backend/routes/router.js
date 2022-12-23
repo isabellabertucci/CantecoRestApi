@@ -10,6 +10,7 @@ router.use("/", itemRouter) // todas as rotas a partir de /algumaCoisa vai vir d
 // meals router
 
 const mealsRouter = require("./meals")
+
 router.use("/", mealsRouter)
 
 

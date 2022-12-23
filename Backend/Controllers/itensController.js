@@ -93,15 +93,14 @@ const itemController = {
             image: req.body.image,
         };
      
-        
         const updatedItem = await ItemModel.findByIdAndUpdate(id, item)
 
         if(!updatedItem){
             res.status(404).json({msg: "Item not found"});
             return;
         }
-
-        res.status(200).json({item, msg: "Item Updated"})
+     
+        res.status(200).json({updatedItem, msg: "Item Updated"})
     },
 
 } 

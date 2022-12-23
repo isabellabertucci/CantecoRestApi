@@ -3,12 +3,10 @@ const { Schema } = mongoose;
 
 
 const itemSchema = new Schema({
-
     itemName: {
         type: String,
         require: true
     },
-   
     kcal:{
         type: Number,
         require: true
@@ -33,7 +31,6 @@ const itemSchema = new Schema({
         type: Number,
         require: false
     },
-    
     image: {
         type: String,
         require: false
