@@ -1,6 +1,5 @@
-const mongoose = require ("mongoose");
-
-const { Schema } = mongoose;
+const mongoose = require ("mongoose")
+const {Schema} = mongoose
 
 const {itemSchema} = require("./Item");
 
@@ -17,15 +16,17 @@ const mealsSchema = new Schema({
         type: String,
         require: false
     },
-    itens: {
+    item: {
        type: [itemSchema],
        require: true
-       /* como colocar a quantidade? */
     },
 },
     {timestamps: true} // controla data de criacao e atualizacao
 );
 
-const Meals = mongoose.model("Meals", mealsSchema)
+const Meal = mongoose.model("Meal", mealsSchema)
 
-module.exports = Meals; // nao depende do schema do meals 
+module.exports = {
+Meal,
+mealsSchema, 
+}; // nao depende do schema do meals 

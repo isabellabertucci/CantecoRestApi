@@ -9,13 +9,10 @@ const jwt = require('jsonwebtoken')
 const app = express()
 
 //Config JSON response, express ler o json 
-
 app.use(express.json())
 
 
-
 // Models
-
 const User = require("./Backend/models/User");
 const Item = require("./Backend/models/Item");
 const routes = require("./Backend/routes/router")
@@ -29,7 +26,7 @@ app.get('/', (req, res) => {
 
 
 
-//                                                          CREATE USER 
+//  CREATE USER 
 
 
 
@@ -42,8 +39,6 @@ app.get("/user/:id",checkToken, async (req, res) =>{
     // check if user exists
    
     const user = await User.findById(id, '-password') // exclui a password
-
-
     res.status(200).json({ user })
      
 })
@@ -71,13 +66,13 @@ function checkToken(req, res, next){
 }
 
 
-/* Registe User */
+// Registe User //
 
 app.post('/auth/register', async (req, res) => {
 
     const { name, email, password, comfirmPassword } = req.body
 
-    // validations //
+    // validations 
     if (!name) {
         return res.status(422).json({ msg: "Required Name" })
     } else if (!email) {
@@ -89,6 +84,7 @@ app.post('/auth/register', async (req, res) => {
     } else {
         const userExists = await User.findOne({ email: email })
         console.log(userExists)
+        
         //check if user exists
         if (userExists) {
             return res.status(422).json({ msg: 'Email alredy exists' })
@@ -123,7 +119,7 @@ app.post('/auth/register', async (req, res) => {
 
 })
 
-/* Auth login user */
+// Auth login user //
 
 app.post("/auth/login", async (req, res) => {
 
@@ -174,68 +170,13 @@ app.post("/auth/login", async (req, res) => {
 
 
 
+//    DATABASE
 
+const db = require("./Backend/db/database");
 
-
-
-//                                                          CREATE ITENS 
-/* 
-    app.post("/itens/create", async (req, res) => {
-    const { itemName, kcal, image } = req.body
-
-    // validations 
-    if (!itemName) {
-        return res.status(422).json({ msg: "Required itemName" })
-    }
-
-    if (!kcal) {
-        return res.status(422).json({ msg: "Required kcal" })
-    }
-    if (!image) {
-        return res.status(422).json({ msg: "Required image" })
-    }else {
-        const itemExists = await Item.findOne({ itemName: itemName })
-        console.log(itemExists)
-        //check if item exists
-        if (itemExists) {
-            return res.status(422).json({ msg: 'Item alredy exists' })
-        } 
-
-        const item = new Item({
-            itemName,
-            kcal,
-            image,
-        })
-
-        // validação de erro 
-
-        try {
-
-            await item.save()
-
-            res.status(201).json({ msg: 'Item criado com sucesso' })
-
-        } catch (error) {
-            console.log(error);
-
-            res.status(500).json({ msg: 'nao criou nada sua burra' })
-
-        }
-    }
-})
- */
-
-
-//                                                         DATABASE
-
-const conn = require("./Backend/db/conn");
-
-conn();
+db();
 
 app.use('/api',routes);
-
-
-
 
 app.listen(3000, function(){
     console.log("Servidor online!");

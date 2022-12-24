@@ -1,4 +1,4 @@
-  const { Item: ItemModel} = require ("../models/Item.js")
+const { Item: ItemModel} = require ("../models/Item.js")
 
 const itemController = {
 
@@ -8,6 +8,7 @@ const itemController = {
             const item = {
                 itemName: req.body.itemName,
                 kcal: req.body.kcal,
+                quantity:req.body.quantity,
                 protein: req.body.protein,
                 fat: req.body.fat,
                 carbs: req.body.carbs,
@@ -24,15 +25,15 @@ const itemController = {
 
         } catch (error) {
 
-            console.log(` Ocorreu um erro no controller ${error}`);
+            console.log(error);
             
         }
     },
 
     getAll: async(req, res) =>{
         try {
-            const itens = await ItemModel.find();
-            res.json(itens);
+            const item = await ItemModel.find();
+            res.json(item);
             
         } catch (error) {
             console.log(` Ocorreu um erro no controller ${error}`)
@@ -51,6 +52,7 @@ const itemController = {
             }
 
             res.json(item)
+
         } catch (error) {
             console.log(` Ocorreu um erro no controller ${error}`)
         }
