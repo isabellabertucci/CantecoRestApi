@@ -1,5 +1,5 @@
 const { Meal: MealModel } = require("../models/Meals");
-const { getAll } = require("./itensController");
+const { getAll } = require("./itemController");
 
 const mealsController = {
 
@@ -15,17 +15,17 @@ const mealsController = {
             }
 
             const response = await MealModel.create(meal);
-            res.status(200).json({ response, msg: "successfully created meal" })
 
+            res.status(200).json({ response, msg: "successfully created meal" })
 
         } catch (error) {
             console.log(error);
-
         }
     },
 
     getAll: async (req, res) => {
         try {
+
             const meals = await MealModel.find()
 
             res.json(meals);
@@ -44,6 +44,7 @@ const mealsController = {
                 res.status(404).json({ msg: "Meals not found" })
                 return;
             }
+
             res.json(meal);
 
         } catch (error) {
@@ -77,7 +78,11 @@ const mealsController = {
         try {
             const id = req.params.id
 
-            const meal = {
+            if(req.body.mealName == null|| req.body.item == null) {
+                return res.status(422).json({ msg: "mealName and item is required" }); 
+            } 
+
+            const update = {
                 mealName: req.body.mealName,
                 type: req.body.type,
                 image: req.body.image,
@@ -85,14 +90,14 @@ const mealsController = {
                 item: req.body.item,
             };
 
-            const updateMeal = await MealModel.findByIdAndUpdate(id, meal)
+            const mealUpdated = await MealModel.findByIdAndUpdate(id, update, {new: true});
 
-            if (!updateMeal) {
+            if (mealUpdated == null) {
                 res.status(404).json({ msg: "Meal not found" });
                 return;
             };
 
-            res.status(200).json({ updateMeal, msg: "Successfully update meal" })
+            res.status(200).json({ data: mealUpdated, msg: "Successfully update meal" })
 
         } catch (error) {
             console.log(error);

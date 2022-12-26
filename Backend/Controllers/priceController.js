@@ -1,4 +1,5 @@
-const { Price: PriceModel } = require("../models/PriceList")
+const Price = require("../models/Price")
+const { Price: PriceModel } = require("../models/Price");
 
 const priceController = {
 
@@ -14,7 +15,6 @@ const priceController = {
             const response = await PriceModel.create(price);
 
             res.status(200).json({ response, msg: "successfully created price" })
-
 
         } catch (error) {
             console.log(error);
@@ -72,24 +72,30 @@ const priceController = {
     },
 
     update: async (req, res) => {
-        
-
+        try {
             const id = req.params.id;
 
-            const updatedPrice = {
+            if (req.body.userType == null || req.body.priceWIva == null || req.body.priceWoIva == null) {
+                return res.status(422).json({ msg: "userType and priceWIva also priceWoIva is required" });
+            }
+
+            const price = {
                 userType: req.body.userType,
                 priceWIva: req.body.priceWIva,
                 priceWoIva: req.body.priceWoIva,
-            };
-            
-            try {
-             await PriceModel.findByIdAndUpdate(id, updatedPrice);
+            }
 
-            if (!updatedPrice) {
+            const priceUpdated = await PriceModel.findByIdAndUpdate(id, price, { new: true })
+
+            console.log("price for update: " + priceUpdated);
+
+            if (!priceUpdated) {
                 res.status(404).json({ msg: "Price not found" });
                 return;
             }
-            res.status(200).json({ updatedPrice, msg: "Price Updated" })
+
+            console.log("price updated: " + priceUpdated)
+            res.status(200).json({ priceUpdated, msg: "Price Updated" })
 
         } catch (error) {
             console.log(error);

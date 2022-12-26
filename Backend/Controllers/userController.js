@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-    
+
 const userController = {
 
 
@@ -178,7 +178,7 @@ const userController = {
             const salt = await bcrypt.genSalt(12) //adicionar digitos a mais para dificultar a leitura da senha 
             const passwordHash = await bcrypt.hash(password, salt)
 
-            const userUpdated = {
+            const update = {
                 name,
                 email,
                 userRole,
@@ -187,7 +187,8 @@ const userController = {
 
             try {
 
-                await User.findByIdAndUpdate(id, userUpdated);
+                await User.findByIdAndUpdate(id, update, { new: true });
+
                 res.status(200).json({ msg: 'user updated' })
 
             } catch (error) {

@@ -1,6 +1,6 @@
 const router = require("express").Router()
 
-const priceController = require("../Controllers/priceListController")
+const priceController = require("../Controllers/priceController")
 
 const authentication = require("../middleware/authentation");
 

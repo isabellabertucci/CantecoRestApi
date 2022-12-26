@@ -1,37 +1,34 @@
-const mongoose = require ("mongoose")
-const {Schema} = mongoose
+const mongoose = require("mongoose")
 
-const {itemSchema} = require("./Item");
+const { itemSchema } = require("./Item");
 
-const mealsSchema = new Schema({
-    mealName: {
-        type: String,
-        require: true
-    },
-    type: {
-        type: String,
-        require: true
-    },
-    image: {
-        type: String,
-        require: false
-    },
-    hourType: {
-        type: String,
-        require: false
-    },
+const mealsSchema = mongoose.Schema(
+    {
+        mealName: {
+            type: String,
+            require: true
+        },
+        type: {
+            type: String,
+            require: true
+        },
+        image: {
+            type: String,
+            require: false
+        },
+        hourType: {
+            type: String,
+            require: false
+        },
 
-    item: {
-       type: [itemSchema],
-       require: true
+        item: {
+            type: [itemSchema],
+            require: true
+        },
     },
-},
-    {timestamps: true} // controla data de criacao e atualizacao
+    { timestamps: true }
 );
 
 const Meal = mongoose.model("Meal", mealsSchema)
 
-module.exports = {
-Meal,
-mealsSchema, 
-}; // nao depende do schema do meals 
+module.exports = { Meal, mealsSchema };

@@ -4,9 +4,9 @@ require('dotenv').config()
 const express = require('express')
 
 const userRoutes = require("./Backend/routes/user");
-const itemRoutes = require("./Backend/routes/itens");
+const itemRoutes = require("./Backend/routes/item");
 const mealRoutes = require("./Backend/routes/meals");
-const priceRoutes = require("./Backend/routes/priceList");
+const priceRoutes = require("./Backend/routes/price");
 
 const app = express()
 
@@ -29,7 +29,6 @@ const dataBase = require("./Backend/db/database");
 
 dataBase();
 
-//Unknown page
 app.use((req, res, next) => {
     next(res.status(404).json({ msg: "Url not found" }));
 });
