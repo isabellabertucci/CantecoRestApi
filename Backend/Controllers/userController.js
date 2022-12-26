@@ -101,7 +101,7 @@ const userController = {
 
                 await user.save()
 
-                res.status(201).json({ msg: 'user criado com sucesso' })
+                res.status(201).json({ msg: 'User created successfully' })
 
             } catch (error) {
                 console.log(error);

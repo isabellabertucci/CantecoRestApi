@@ -7,7 +7,7 @@ const Authentication = {
         const authHeader = req.headers[`authorization`]
         const token = authHeader && authHeader.split(" ")[1]
 
-        if (!token) return res.status(401).json({ msg: 'acesso negado! You need a token' })
+        if (!token) return res.status(401).json({ msg: 'Access denied! You need a token' })
 
         try {
             const secret = process.env.SECRET
@@ -29,7 +29,7 @@ const Authentication = {
             const authHeader = req.headers[`authorization`]
             const token = authHeader && authHeader.split(" ")[1]
         
-            if (!token) return res.status(401).json({ msg: 'acesso negado! You need a token' })
+            if (!token) return res.status(401).json({ msg: 'Access denied! You need a token' })
         
             const secret = process.env.SECRET
             //decoded dados que ficam dentro do jwt.

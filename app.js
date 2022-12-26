@@ -3,9 +3,10 @@
 require('dotenv').config()
 const express = require('express')
 
-const userRoutes = require("./Backend/routes/user")
-const itemRoutes = require("./Backend/routes/itens")
-const mealRoutes = require("./Backend/routes/meals")
+const userRoutes = require("./Backend/routes/user");
+const itemRoutes = require("./Backend/routes/itens");
+const mealRoutes = require("./Backend/routes/meals");
+const priceRoutes = require("./Backend/routes/priceList");
 
 const app = express()
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 app.use("/user", userRoutes);   
 app.use("/item", itemRoutes);
 app.use("/meal", mealRoutes);
+app.use("/price", priceRoutes);
 
 //DATABASE
 const dataBase = require("./Backend/db/database");

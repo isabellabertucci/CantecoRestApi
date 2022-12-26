@@ -18,7 +18,7 @@ function checkToken(req, res, next) {
     const authHeader = req.headers[`authorization`]
     const token = authHeader && authHeader.split(" ")[1]
 
-    if (!token) return res.status(401).json({ msg: 'acesso negado! You need a token' })
+    if (!token) return res.status(401).json({ msg: 'Access denied! You need a token' })
 
     try {
         const secret = process.env.SECRET
@@ -28,7 +28,7 @@ function checkToken(req, res, next) {
             next()
         });
     } catch (error) {
-        res.status(400).json({ msg: 'token invalido!' })
+        res.status(400).json({ msg: 'Invalid token!' })
     }
 }
 
