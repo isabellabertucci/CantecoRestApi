@@ -16,6 +16,11 @@ const mealsSchema = new Schema({
         type: String,
         require: false
     },
+    hourType: {
+        type: String,
+        require: false
+    },
+
     item: {
        type: [itemSchema],
        require: true

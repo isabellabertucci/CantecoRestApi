@@ -2,15 +2,17 @@ const router = require("express").Router()
 
 const mealsController = require("../Controllers/mealsController")
 
-router.route("/meals").post((req, res) => mealsController.create(req, res));
+const authentication = require("../middleware/authentation");
 
-router.route("/meals").get((req, res) => mealsController.getAll(req, res));
+router.post("/", authentication.checkAdminToken, mealsController.create);
 
-router.route("/meals/:id").get((req, res) => mealsController.get(req, res));
+router.get("/", authentication.checkUserToken, mealsController.getAll);
 
-router.route("/meals/:id").delete((req, res) => mealsController.delete(req, res));
+router.get("/:id",authentication.checkUserToken, mealsController.get);
 
-router.route("/meals/:id").put((req, res) => mealsController.update(req, res));
+router.delete("/:id", authentication.checkAdminToken, mealsController.delete);
+
+router.put("/:id", authentication.checkAdminToken, mealsController.update);
 
 
 module.exports = router; 

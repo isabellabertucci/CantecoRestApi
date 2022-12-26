@@ -2,183 +2,37 @@
 
 require('dotenv').config()
 const express = require('express')
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+
+const userRoutes = require("./Backend/routes/user")
+const itemRoutes = require("./Backend/routes/itens")
+const mealRoutes = require("./Backend/routes/meals")
 
 const app = express()
 
 //Config JSON response, express ler o json 
 app.use(express.json())
 
-
-// Models
-const User = require("./Backend/models/User");
-const Item = require("./Backend/models/Item");
-const routes = require("./Backend/routes/router")
-
-
 // open Route - Public Route
 app.get('/', (req, res) => {
     res.status(200).json({ msg: "Welcome to CANTECO API" })
 })
 
+// routes to http client.
+app.use("/user", userRoutes);   
+app.use("/item", itemRoutes);
+app.use("/meal", mealRoutes);
 
+//DATABASE
+const dataBase = require("./Backend/db/database");
 
+dataBase();
 
-//  CREATE USER 
+//Unknown page
+app.use((req, res, next) => {
+    next(res.status(404).json({ msg: "Url not found" }));
+});
 
-
-
-// Prive route - info user por id
-// funcao para fazer rota privada, criando um fun verificando o token
-app.get("/user/:id",checkToken, async (req, res) =>{
-    
-    const id = req.params.id
-
-    // check if user exists
-   
-    const user = await User.findById(id, '-password') // exclui a password
-    res.status(200).json({ user })
-     
+app.listen(3000, function () {
+    console.log("Api online!");
 })
 
-
-// next é sucesso, prossiga 
-
-function checkToken(req, res, next){
-    const authHeader = req.headers[`authorization`]
-    const token = authHeader && authHeader.split(" ")[1]
-
-    if (!token){
-        return res.status(401).json({msg: 'acesso negado! You need a token'})
-    }
-    try{
-        const secret = process.env.SECRET
-
-        jwt.verify(token, secret)
-        
-        next()
-
-    }catch(error){
-        res.status(400).json({msg: 'token invalido!'})
-    }
-}
-
-
-// Registe User //
-
-app.post('/auth/register', async (req, res) => {
-
-    const { name, email, password, comfirmPassword } = req.body
-
-    // validations 
-    if (!name) {
-        return res.status(422).json({ msg: "Required Name" })
-    } else if (!email) {
-        return res.status(422).json({ msg: "Required Email" })
-    } else if (!password) {
-        return res.status(422).json({ msg: "Required Password" })
-    } else if (password !== comfirmPassword) {
-        return res.status(422).json({ msg: "Password doesn't match " })
-    } else {
-        const userExists = await User.findOne({ email: email })
-        console.log(userExists)
-        
-        //check if user exists
-        if (userExists) {
-            return res.status(422).json({ msg: 'Email alredy exists' })
-        } 
-
-        // create password 
-
-        const salt = await bcrypt.genSalt(12) //adicionar digitos a mais para dificultar a leitura da senha 
-        const passwordHash = await bcrypt.hash(password, salt)
-
-        const user = new User({
-            name,
-            email,
-            password: passwordHash,
-        })
-
-        // validação de erro 
-
-        try {
-
-            await user.save()
-
-            res.status(201).json({ msg: 'user criado com sucesso' })
-
-        } catch (error) {
-            console.log(error);
-
-            res.status(500).json({ msg: 'Servor error. Try again later' })
-
-        }
-    }
-
-})
-
-// Auth login user //
-
-app.post("/auth/login", async (req, res) => {
-
-    const { email, password } = req.body
-
-    // validations 
-    if (!email) {
-        return res.status(422).json({ msg: "Required Email" })
-    }
-
-    if (!password) {
-        return res.status(422).json({ msg: "Required Password" })
-    }
-
-    // check if users exists
-    const user = await User.findOne({ email: email })
-
-    if (!user) {
-        return res.status(404).json({ msg: 'User not found' })
-    }
-
-    // check if password match
-
-    const checkPassword = await bcrypt.compare(password, user.password)
-
-    if (!checkPassword) {
-        return res.status(422).json({ msg: 'Invalid Password' })
-    }
-
-
-    //validação auth
-    try{
-        const secret = process.env.SECRET
-
-        const token = jwt.sign({
-            id: user._id
-        }, secret
-        )
-
-        res.status(200).json({msg: 'sucessfully authenticated', token})
-
-    }catch (error) {
-        console.log(error);
-        res.status(500).json({ msg: 'Servor error. Try again later' })
-    }
-})
-
-
-
-
-//    DATABASE
-
-const db = require("./Backend/db/database");
-
-db();
-
-app.use('/api',routes);
-
-app.listen(3000, function(){
-    console.log("Servidor online!");
-})
-    

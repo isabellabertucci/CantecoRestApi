@@ -2,14 +2,16 @@ const router = require("express").Router()
 
 const itemController = require("../Controllers/itensController")
 
-router.route("/itens").post((req, res) => itemController.create(req, res));
+const authentication = require("../middleware/authentation");
 
-router.route("/itens").get((req, res) => itemController.getAll(req, res));
+router.post("/", authentication.checkAdminToken, itemController.create);
 
-router.route("/itens/:id").get((req, res) => itemController.get(req, res));
+router.get("/", authentication.checkUserToken, itemController.getAll);
 
-router.route("/itens/:id").delete((req, res) => itemController.delete(req, res));
+router.get("/:id", authentication.checkUserToken, itemController.get);
 
-router.route("/itens/:id").put((req, res) => itemController.update(req, res));
+router.delete("/:id",authentication.checkAdminToken, itemController.delete);
+
+router.put("/:id",authentication.checkAdminToken, itemController.update);
 
 module.exports = router; 
