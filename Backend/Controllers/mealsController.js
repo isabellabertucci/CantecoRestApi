@@ -78,9 +78,9 @@ const mealsController = {
         try {
             const id = req.params.id
 
-            if(req.body.mealName == null|| req.body.item == null) {
-                return res.status(422).json({ msg: "mealName and item is required" }); 
-            } 
+            if (req.body.mealName == null || req.body.item == null) {
+                return res.status(422).json({ msg: "mealName and item is required" });
+            }
 
             const update = {
                 mealName: req.body.mealName,
@@ -90,7 +90,7 @@ const mealsController = {
                 item: req.body.item,
             };
 
-            const mealUpdated = await MealModel.findByIdAndUpdate(id, update, {new: true});
+            const mealUpdated = await MealModel.findByIdAndUpdate(id, update, { new: true });
 
             if (mealUpdated == null) {
                 res.status(404).json({ msg: "Meal not found" });

@@ -5,10 +5,10 @@ const itemController = {
     create: async (req, res) => {
         try {
 
-            if(req.body.itemName == null ||req.body.kcal == null || req.body.quantity == null) {
-                return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" }); 
+            if (req.body.itemName == null || req.body.kcal == null || req.body.quantity == null) {
+                return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" });
             }
-    
+
             const item = {
                 itemName: req.body.itemName,
                 kcal: req.body.kcal,
@@ -85,10 +85,10 @@ const itemController = {
 
         const id = req.params.id
 
-        if(req.body.itemName == null ||req.body.kcal == null || req.body.quantity == null) {
-            return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" }); 
+        if (req.body.itemName == null || req.body.kcal == null || req.body.quantity == null) {
+            return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" });
         }
-    
+
         const item = {
             itemName: req.body.itemName,
             kcal: req.body.kcal,
@@ -101,17 +101,16 @@ const itemController = {
             image: req.body.image
         };
 
-        const updatedItem = await ItemModel.findByIdAndUpdate(id, item, {new: true});
+        const updatedItem = await ItemModel.findByIdAndUpdate(id, item, { new: true });
 
         if (updatedItem == null) {
             res.status(404).json({ msg: "Item not found" });
             return;
         }
 
-        res.status(200).json({data: updatedItem, msg: "Item Updated" })
+        res.status(200).json({ data: updatedItem, msg: "Item Updated" })
     },
 
 }
 
 module.exports = itemController;
-

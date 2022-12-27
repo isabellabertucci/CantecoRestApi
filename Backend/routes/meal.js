@@ -1,4 +1,4 @@
-const router = require("express").Router() 
+const router = require("express").Router()
 
 const mealsController = require("../Controllers/mealsController")
 
@@ -8,11 +8,10 @@ router.post("/", authentication.checkAdminToken, mealsController.create);
 
 router.get("/", authentication.checkUserToken, mealsController.getAll);
 
-router.get("/:id",authentication.checkUserToken, mealsController.get);
+router.get("/:id", authentication.checkUserToken, mealsController.get);
 
 router.delete("/:id", authentication.checkAdminToken, mealsController.delete);
 
 router.put("/:id", authentication.checkAdminToken, mealsController.update);
-
 
 module.exports = router; 

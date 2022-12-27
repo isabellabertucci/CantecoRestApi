@@ -5,12 +5,12 @@ const express = require('express')
 
 const userRoutes = require("./Backend/routes/user");
 const itemRoutes = require("./Backend/routes/item");
-const mealRoutes = require("./Backend/routes/meals");
+const mealRoutes = require("./Backend/routes/meal");
 const priceRoutes = require("./Backend/routes/price");
 
 const app = express()
 
-//Config JSON response, express ler o json 
+//Config JSON response, express read json 
 app.use(express.json())
 
 // open Route - Public Route
@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
 })
 
 // routes to http client.
-app.use("/user", userRoutes);   
-app.use("/item", itemRoutes);
-app.use("/meal", mealRoutes);
-app.use("/price", priceRoutes);
+app.use("/user", userRoutes);
+app.use("/items", itemRoutes);
+app.use("/meals", mealRoutes);
+app.use("/prices", priceRoutes);
 
 //DATABASE
 const dataBase = require("./Backend/db/database");

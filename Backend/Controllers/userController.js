@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 
 const userController = {
 
-
     login: async (req, res) => {
 
         const { email, password } = req.body
@@ -33,7 +32,7 @@ const userController = {
             return res.status(422).json({ msg: 'Invalid Password' })
         }
 
-        //validação auth
+        //validation Auth
         try {
             const secret = process.env.SECRET
 
@@ -54,7 +53,8 @@ const userController = {
 
         const id = req.params.id
 
-        const user = await User.findById(id, '-password') // exclui a password
+        // deletes password
+        const user = await User.findById(id, '-password')
         res.status(200).json({ user })
 
     },
@@ -85,7 +85,8 @@ const userController = {
 
             // create password 
 
-            const salt = await bcrypt.genSalt(12) //adicionar digitos a mais para dificultar a leitura da senha 
+            //add extra digits to make the password more difficult to read
+            const salt = await bcrypt.genSalt(12)
             const passwordHash = await bcrypt.hash(password, salt)
 
             const user = new User({
@@ -95,7 +96,7 @@ const userController = {
                 password: passwordHash,
             })
 
-            // validação de erro 
+            // error validation
 
             try {
 
@@ -162,7 +163,7 @@ const userController = {
             return res.status(422).json({ msg: "Password doesn't match " })
         } else {
 
-            //Atualizar email so se o email for diferente do actual.
+            //Update e-mail, if the e-mail address is different to the current one.
             if (user.email != email) {
                 const userExists = await User.findOne({ email: email });
                 console.log(userExists)
@@ -175,7 +176,9 @@ const userController = {
             }
 
             // create password 
-            const salt = await bcrypt.genSalt(12) //adicionar digitos a mais para dificultar a leitura da senha 
+
+            //add extra digits to make the password more difficult to read
+            const salt = await bcrypt.genSalt(12)
             const passwordHash = await bcrypt.hash(password, salt)
 
             const update = {

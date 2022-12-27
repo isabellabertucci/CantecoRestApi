@@ -1,4 +1,4 @@
-const router = require("express").Router() 
+const router = require("express").Router()
 
 const itemController = require("../Controllers/itemController")
 
@@ -10,8 +10,8 @@ router.get("/", authentication.checkUserToken, itemController.getAll);
 
 router.get("/:id", authentication.checkUserToken, itemController.get);
 
-router.delete("/:id",authentication.checkAdminToken, itemController.delete);
+router.delete("/:id", authentication.checkAdminToken, itemController.delete);
 
-router.put("/:id",authentication.checkAdminToken, itemController.update);
+router.put("/:id", authentication.checkAdminToken, itemController.update);
 
 module.exports = router; 
