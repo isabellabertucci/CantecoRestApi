@@ -1,0 +1,145 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Canteco api document",
+        "description": "Canteco Project Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:/3000",
+            "description": "Localhost"
+        }
+    ],
+    "paths": {
+        "/items": {
+            "post": {
+                "summary": "Criação de um Item",
+                "description": "Essa rota será responsável por criar um novo item",
+                "tags": [
+                    "Items"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Item"
+                            },
+                            "examples": {
+                                "item": {
+                                    "value": {
+                                        "itemName": "Black Beans",
+                                        "kcal": 850,
+                                        "quantity": 1,
+                                        "protein": 210,
+                                        "fat": 3,
+                                        "carbs": 180,
+                                        "water": 1650,
+                                        "carbon": 2,
+                                        "image": "BlackBeans.img"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized client"
+                    },
+                    "422": {
+                        "description": "Item alredy exists"
+                    },
+                    "200": {
+                        "description": "successfully created item",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Item"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "items/{id}": {
+            "get": {
+                "description": "Busca de um item pelo id",
+                "summary": "Busca de um item por id",
+                "tags": [
+                    "Items"
+                ],
+                "parameters:": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do item para buscar",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "ok"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Item": {
+                "type": "object",
+                "properties": {
+                    "itemName": {
+                        "type": "string"
+                    },
+                    "kcal": {
+                        "type": "number"
+                    },
+                    "quantity": {
+                        "type": "number"
+                    },
+                    "protein": {
+                        "type": "number"
+                    },
+                    "fat": {
+                        "type": "number"
+                    },
+                    "carbs": {
+                        "type": "number"
+                    },
+                    "water": {
+                        "type": "number"
+                    },
+                    "carbon": {
+                        "type": "number"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "https",
+                "scheme": "bearer",
+                "bererFormat": "JWT"
+            }
+        }
+    }
+}

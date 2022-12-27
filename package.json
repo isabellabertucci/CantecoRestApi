@@ -1,5 +1,5 @@
 {
-  "name": "auth_canteco",
+  "name": "API_canteco",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,10 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/swagger-ui-express": "^4.1.3",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.8.0"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.0",
+    "swagger-jsdoc": "^6.2.7",
+    "swagger-ui-express": "^4.6.0"
   }
 }

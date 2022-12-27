@@ -4,8 +4,21 @@ const { Price: PriceModel } = require("../models/Price");
 const priceController = {
 
     create: async (req, res) => {
-
         try {
+
+            if (req.body.userType == null || req.body.priceWIva == null || req.body.priceWoIva == null) {
+                return res.status(422).json({ msg: "UserType and priceWIva also priceWoIva is required" });
+            } else {
+                const priceExists = await Price.findOne({ price: Price })
+                console.log(priceExists)
+
+                //check if price exists
+                if (priceExists) {
+                    return res.status(422).json({ msg: 'Price alredy exists' })
+                }
+
+            }
+            
             const price = {
                 userType: req.body.userType,
                 priceWIva: req.body.priceWIva,

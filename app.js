@@ -1,7 +1,10 @@
 // imports
 
 require('dotenv').config()
-const express = require('express')
+const express = require('express');
+
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocumentation = require("./Backend/swagger.json");
 
 const userRoutes = require("./Backend/routes/user");
 const itemRoutes = require("./Backend/routes/item");
@@ -13,6 +16,7 @@ const app = express()
 //Config JSON response, express read json 
 app.use(express.json())
 
+
 // open Route - Public Route
 app.get('/', (req, res) => {
     res.status(200).json({ msg: "Welcome to CANTECO API" })
@@ -23,6 +27,9 @@ app.use("/user", userRoutes);
 app.use("/items", itemRoutes);
 app.use("/meals", mealRoutes);
 app.use("/prices", priceRoutes);
+
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
 
 //DATABASE
 const dataBase = require("./Backend/db/database");

@@ -1,4 +1,4 @@
-const { Item: ItemModel } = require("../models/Item.js")
+const { Item: ItemModel, Item } = require("../models/Item.js")
 
 const itemController = {
 
@@ -7,6 +7,15 @@ const itemController = {
 
             if (req.body.itemName == null || req.body.kcal == null || req.body.quantity == null) {
                 return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" });
+            } else {
+                const itemExists = await Item.findOne({ item: Item })
+                console.log(itemExists)
+
+                //check if item exists
+                if (itemExists) {
+                    return res.status(422).json({ msg: 'Item alredy exists' })
+                }
+
             }
 
             const item = {

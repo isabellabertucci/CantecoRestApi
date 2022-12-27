@@ -1,10 +1,23 @@
-const { Meal: MealModel } = require("../models/Meals");
+const { Meal: MealModel, Meal } = require("../models/Meals");
 const { getAll } = require("./itemController");
 
 const mealsController = {
 
     create: async (req, res) => {
         try {
+
+            if (req.body.mealName == null || req.body.item == null) {
+                return res.status(422).json({ msg: "MealName and Item is required" });
+            } else {
+                const mealExists = await Meal.findOne({ meal: Meal })
+                console.log(mealExists)
+
+                //check if meal exists
+                if (mealExists) {
+                    return res.status(422).json({ msg: 'Meal alredy exists' })
+                }
+
+            }
 
             const meal = {
                 mealName: req.body.mealName,
