@@ -4,9 +4,8 @@
         "version": "1.0.0",
         "title": "Canteco api document",
         "description": "Canteco Project Application API",
-        "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
+        "contact": {
+            "email": "isabella@example.com"
         }
     },
     "servers": [
@@ -16,6 +15,12 @@
         }
     ],
     "paths": {
+        "type": "https",
+        "headers": {
+            "Access-Control-Allow-Origin": {
+                "type": "string"
+            }
+        },
         "/items": {
             "post": {
                 "summary": "Criação de um Item",
@@ -73,24 +78,85 @@
                 }
             }
         },
-        "items/{id}": {
+        "/items/{id}": {
             "get": {
-                "description": "Busca de um item pelo id",
-                "summary": "Busca de um item por id",
-                "tags": [
-                    "Items"
-                ],
-                "parameters:": [
+                "description": "Busca um item pelo id",
+                "summary": "Busca de um item pelo id",
+                "tags":["Items"],
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id do item para buscar",
-                        "required": true
+                        "description": "item pelo id ",
+                        "require": true
                     }
                 ],
                 "responses":{
                     "200":{
-                        "description": "ok"
+                        "description": "ok",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Item"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "description": "Atualizar um item pelo id",
+                "summary": "Atualizar de um item pelo id",
+                "tags":["Items"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "item pelo id ",
+                        "require": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Item"
+                            },
+                            "examples": {
+                                "item": {
+                                    "value": {
+                                        "itemName": "Pastaa",
+                                        "kcal": 850,
+                                        "quantity": 1,
+                                        "protein": 210,
+                                        "fat": 3,
+                                        "carbs": 180,
+                                        "water": 1650,
+                                        "carbon": 2,
+                                        "image": "BlackBeans.img"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "ok",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Item"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -102,34 +168,44 @@
                 "type": "object",
                 "properties": {
                     "itemName": {
-                        "type": "string"
+                        "type": "string",
+                        "require": true
                     },
                     "kcal": {
-                        "type": "number"
+                        "type": "number",
+                        "require": true
                     },
                     "quantity": {
-                        "type": "number"
+                        "type": "number",
+                        "require": true
                     },
                     "protein": {
-                        "type": "number"
+                        "type": "number",
+                        "require": false
                     },
                     "fat": {
-                        "type": "number"
+                        "type": "number",
+                        "require": false
                     },
                     "carbs": {
-                        "type": "number"
+                        "type": "number",
+                        "require": false
                     },
                     "water": {
-                        "type": "number"
+                        "type": "number",
+                        "require": false
                     },
                     "carbon": {
-                        "type": "number"
+                        "type": "number",
+                        "require": false
                     },
                     "image": {
-                        "type": "string"
+                        "type": "string",
+                        "require": false
                     },
                     "id": {
-                        "type": "string"
+                        "type": "string",
+                        "require": false
                     }
                 }
             }
@@ -137,7 +213,7 @@
         "securitySchemes": {
             "bearerAuth": {
                 "type": "https",
-                "scheme": "bearer",
+                "scheme": "Authorization",
                 "bererFormat": "JWT"
             }
         }

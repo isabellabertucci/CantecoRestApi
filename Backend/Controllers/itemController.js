@@ -5,6 +5,8 @@ const itemController = {
     create: async (req, res) => {
         try {
 
+            console.log("cors workibg");
+            
             if (req.body.itemName == null || req.body.kcal == null || req.body.quantity == null) {
                 return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" });
             } else {
