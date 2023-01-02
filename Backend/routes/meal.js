@@ -4,14 +4,14 @@ const mealsController = require("../Controllers/mealsController")
 
 const authentication = require("../middleware/authentation");
 
-router.post("/", authentication.checkAdminToken, mealsController.create);
+router.post("/meals/", authentication.checkAdminToken, mealsController.create);
 
-router.get("/", authentication.checkUserToken, mealsController.getAll);
+router.get("/meals/", authentication.checkUserToken, mealsController.getAll);
 
-router.get("/:id", authentication.checkUserToken, mealsController.get);
+router.get("/meals/:id", authentication.checkUserToken, mealsController.get);
 
-router.delete("/:id", authentication.checkAdminToken, mealsController.delete);
+router.delete("/meals/:id", authentication.checkAdminToken, mealsController.delete);
 
-router.put("/:id", authentication.checkAdminToken, mealsController.update);
+router.put("/meals/:id", authentication.checkAdminToken, mealsController.update);
 
 module.exports = router; 

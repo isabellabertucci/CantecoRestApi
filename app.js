@@ -3,8 +3,9 @@
 require('dotenv').config()
 const express = require('express');
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocumentation = require("./Backend/swagger.json");
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
+
 const cors = require("cors");
 
 const userRoutes = require("./Backend/routes/user");
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
     res.status(200).json({ msg: "Welcome to CANTECO API" })
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -32,12 +33,12 @@ app.use(function(req, res, next) {
 });
 
 // routes to http client.
-app.use("/user", userRoutes);
-app.use("/items", itemRoutes);
-app.use("/meals", mealRoutes);
-app.use("/prices", priceRoutes);
+app.use("/", userRoutes);
+app.use("/", itemRoutes);
+app.use("/", mealRoutes);
+app.use("/", priceRoutes);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile, { swaggerOptions: { persistAuthorization: true } }))
 
 //DATABASE
 const dataBase = require("./Backend/db/database");

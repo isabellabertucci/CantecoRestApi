@@ -3,10 +3,12 @@ const { Item: ItemModel, Item } = require("../models/Item.js")
 const itemController = {
 
     create: async (req, res) => {
+        /* 	#swagger.tags = ['Items'] */
+
         try {
 
             console.log("cors workibg");
-            
+
             if (req.body.itemName == null || req.body.kcal == null || req.body.quantity == null) {
                 return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" });
             } else {
@@ -43,6 +45,8 @@ const itemController = {
     },
 
     getAll: async (req, res) => {
+        /* 	#swagger.tags = ['Items'] */
+
         try {
             const item = await ItemModel.find();
             res.json(item);
@@ -53,6 +57,8 @@ const itemController = {
     },
 
     get: async (req, res) => {
+        /* 	#swagger.tags = ['Items'] */
+
         try {
 
             const id = req.params.id
@@ -71,6 +77,8 @@ const itemController = {
     },
 
     delete: async (req, res) => {
+        /* 	#swagger.tags = ['Items'] */
+
         try {
 
             const id = req.params.id
@@ -93,6 +101,7 @@ const itemController = {
     },
 
     update: async (req, res) => {
+        /* 	#swagger.tags = ['Items'] */
 
         const id = req.params.id
 

@@ -4,6 +4,8 @@ const { getAll } = require("./itemController");
 const mealsController = {
 
     create: async (req, res) => {
+        /* 	#swagger.tags = ['Meals'] */
+
         try {
 
             if (req.body.mealName == null || req.body.item == null) {
@@ -37,6 +39,8 @@ const mealsController = {
     },
 
     getAll: async (req, res) => {
+        /* 	#swagger.tags = ['Meals'] */
+
         try {
 
             const meals = await MealModel.find()
@@ -48,6 +52,8 @@ const mealsController = {
         }
     },
     get: async (req, res) => {
+        /* 	#swagger.tags = ['Meals'] */
+
         try {
 
             const id = req.params.id
@@ -66,6 +72,8 @@ const mealsController = {
     },
 
     delete: async (req, res) => {
+        /* 	#swagger.tags = ['Meals'] */
+
         try {
 
             const id = req.params.id
@@ -88,6 +96,8 @@ const mealsController = {
     },
 
     update: async (req, res) => {
+        /* 	#swagger.tags = ['Meals'] */
+
         try {
             const id = req.params.id
 

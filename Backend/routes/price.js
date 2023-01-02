@@ -4,14 +4,14 @@ const priceController = require("../Controllers/priceController")
 
 const authentication = require("../middleware/authentation");
 
-router.post("/", authentication.checkAdminToken, priceController.create);
+router.post("/prices/", authentication.checkAdminToken, priceController.create);
 
-router.get("/", authentication.checkUserToken, priceController.getAll);
+router.get("/prices/", authentication.checkUserToken, priceController.getAll);
 
-router.get("/:id", authentication.checkUserToken, priceController.get);
+router.get("/prices/:id", authentication.checkUserToken, priceController.get);
 
-router.delete("/:id", authentication.checkAdminToken, priceController.delete);
+router.delete("/prices/:id", authentication.checkAdminToken, priceController.delete);
 
-router.put("/:id", authentication.checkAdminToken, priceController.update);
+router.put("/prices/:id", authentication.checkAdminToken, priceController.update);
 
 module.exports = router; 

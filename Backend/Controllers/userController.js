@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const userController = {
 
     login: async (req, res) => {
+        /* 	#swagger.tags = ['User'] */
 
         const { email, password } = req.body
 
@@ -50,6 +51,7 @@ const userController = {
     },
 
     getById: async (req, res) => {
+        /* 	#swagger.tags = ['User'] */
 
         const id = req.params.id
 
@@ -60,6 +62,7 @@ const userController = {
     },
 
     create: async (req, res) => {
+        /* 	#swagger.tags = ['User'] */
 
         const { name, email, password, userRole, comfirmPassword } = req.body
 
@@ -114,6 +117,8 @@ const userController = {
     },
 
     delete: async (req, res) => {
+        /* 	#swagger.tags = ['User'] */
+
         try {
 
             const id = req.params.id
@@ -139,6 +144,8 @@ const userController = {
     },
 
     update: async (req, res) => {
+        /* 	#swagger.tags = ['User'] */
+
         const id = req.params.id
 
         const user = await User.findById(id);

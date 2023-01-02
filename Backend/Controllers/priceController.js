@@ -4,6 +4,8 @@ const { Price: PriceModel } = require("../models/Price");
 const priceController = {
 
     create: async (req, res) => {
+        /* 	#swagger.tags = ['Prices'] */
+
         try {
 
             if (req.body.userType == null || req.body.priceWIva == null || req.body.priceWoIva == null) {
@@ -18,7 +20,7 @@ const priceController = {
                 }
 
             }
-            
+
             const price = {
                 userType: req.body.userType,
                 priceWIva: req.body.priceWIva,
@@ -35,6 +37,8 @@ const priceController = {
     },
 
     getAll: async (req, res) => {
+        /* 	#swagger.tags = ['Prices'] */
+
         try {
 
             const price = await PriceModel.find();
@@ -46,6 +50,8 @@ const priceController = {
     },
 
     get: async (req, res) => {
+        /* 	#swagger.tags = ['Prices'] */
+
         try {
 
             const id = req.params.id;
@@ -64,6 +70,8 @@ const priceController = {
     },
 
     delete: async (req, res) => {
+        /* 	#swagger.tags = ['Prices'] */
+
         try {
             const id = req.params.id;
             const price = await PriceModel.findById(id);
@@ -85,6 +93,8 @@ const priceController = {
     },
 
     update: async (req, res) => {
+        /* 	#swagger.tags = ['Prices'] */
+
         try {
             const id = req.params.id;
 
