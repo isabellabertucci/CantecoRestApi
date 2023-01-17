@@ -3,16 +3,13 @@ const { Item: ItemModel, Item } = require("../models/Item.js")
 const itemController = {
 
     create: async (req, res) => {
-        /* 	#swagger.tags = ['Items'] */
 
         try {
-
-            console.log("cors workibg");
-
+            
             if (req.body.itemName == null || req.body.kcal == null || req.body.quantity == null) {
                 return res.status(422).json({ msg: "ItemName and Kcal also Quantity is required" });
             } else {
-                const itemExists = await Item.findOne({ item: Item })
+                const itemExists = await Item.findOne({ itemName: req.body.itemName })
                 console.log(itemExists)
 
                 //check if item exists
@@ -39,25 +36,22 @@ const itemController = {
             res.status(200).json({ response, msg: "successfully created item" })
 
         } catch (error) {
-
-            console.log(error);
+            res.status(500).json({ error})
         }
     },
 
     getAll: async (req, res) => {
-        /* 	#swagger.tags = ['Items'] */
 
         try {
             const item = await ItemModel.find();
             res.json(item);
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     },
 
     get: async (req, res) => {
-        /* 	#swagger.tags = ['Items'] */
 
         try {
 
@@ -72,12 +66,11 @@ const itemController = {
             res.json(item)
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     },
 
     delete: async (req, res) => {
-        /* 	#swagger.tags = ['Items'] */
 
         try {
 
@@ -96,12 +89,12 @@ const itemController = {
 
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     },
 
     update: async (req, res) => {
-        /* 	#swagger.tags = ['Items'] */
+
 
         const id = req.params.id
 
@@ -127,7 +120,6 @@ const itemController = {
             res.status(404).json({ msg: "Item not found" });
             return;
         }
-
         res.status(200).json({ data: updatedItem, msg: "Item Updated" })
     },
 

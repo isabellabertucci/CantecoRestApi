@@ -1,12 +1,12 @@
 // imports
 
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 
 const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./swagger_output.json')
-
+const swaggerFile = require('./swagger.json')
 const cors = require("cors");
+const nodemailer = require("nodemailer");
 
 const userRoutes = require("./Backend/routes/user");
 const itemRoutes = require("./Backend/routes/item");
@@ -49,7 +49,8 @@ app.use((req, res, next) => {
     next(res.status(404).json({ msg: "Url not found" }));
 });
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log("Api online!");
 })
+
 

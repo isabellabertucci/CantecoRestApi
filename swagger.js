@@ -23,13 +23,11 @@ const options = {
             },
         ],
         securityDefinitions: {
-            Bearer: {
-                type: "apiKey",
-                in: "header", // can be "header", "query" or "cookie"
-                name: "Authorization", // name of the header, query parameter or cookie
-                description:
-                    "Please enter a valid token to test the requests below...",
-            },
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT'
+            }
         }
     },
 };

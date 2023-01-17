@@ -1,10 +1,8 @@
-const Price = require("../models/Price")
-const { Price: PriceModel } = require("../models/Price");
+const { Price } = require("../models/Price");
 
 const priceController = {
 
     create: async (req, res) => {
-        /* 	#swagger.tags = ['Prices'] */
 
         try {
 
@@ -37,7 +35,6 @@ const priceController = {
     },
 
     getAll: async (req, res) => {
-        /* 	#swagger.tags = ['Prices'] */
 
         try {
 
@@ -50,7 +47,6 @@ const priceController = {
     },
 
     get: async (req, res) => {
-        /* 	#swagger.tags = ['Prices'] */
 
         try {
 
@@ -70,7 +66,6 @@ const priceController = {
     },
 
     delete: async (req, res) => {
-        /* 	#swagger.tags = ['Prices'] */
 
         try {
             const id = req.params.id;
@@ -87,13 +82,11 @@ const priceController = {
 
 
         } catch (error) {
-            console.log(error);
-
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     },
 
     update: async (req, res) => {
-        /* 	#swagger.tags = ['Prices'] */
 
         try {
             const id = req.params.id;
@@ -121,7 +114,7 @@ const priceController = {
             res.status(200).json({ priceUpdated, msg: "Price Updated" })
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     },
 

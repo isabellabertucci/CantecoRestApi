@@ -4,23 +4,19 @@ const { getAll } = require("./itemController");
 const mealsController = {
 
     create: async (req, res) => {
-        /* 	#swagger.tags = ['Meals'] */
 
         try {
-
             if (req.body.mealName == null || req.body.item == null) {
                 return res.status(422).json({ msg: "MealName and Item is required" });
             } else {
-                const mealExists = await Meal.findOne({ meal: Meal })
+                const mealExists = await Meal.findOne({ mealName: req.body.mealName })
                 console.log(mealExists)
 
                 //check if meal exists
                 if (mealExists) {
                     return res.status(422).json({ msg: 'Meal alredy exists' })
                 }
-
             }
-
             const meal = {
                 mealName: req.body.mealName,
                 type: req.body.type,
@@ -39,7 +35,6 @@ const mealsController = {
     },
 
     getAll: async (req, res) => {
-        /* 	#swagger.tags = ['Meals'] */
 
         try {
 
@@ -52,7 +47,6 @@ const mealsController = {
         }
     },
     get: async (req, res) => {
-        /* 	#swagger.tags = ['Meals'] */
 
         try {
 
@@ -67,12 +61,11 @@ const mealsController = {
             res.json(meal);
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     },
 
     delete: async (req, res) => {
-        /* 	#swagger.tags = ['Meals'] */
 
         try {
 
@@ -91,12 +84,11 @@ const mealsController = {
 
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     },
 
     update: async (req, res) => {
-        /* 	#swagger.tags = ['Meals'] */
 
         try {
             const id = req.params.id
@@ -123,7 +115,7 @@ const mealsController = {
             res.status(200).json({ data: mealUpdated, msg: "Successfully update meal" })
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
         }
     }
 

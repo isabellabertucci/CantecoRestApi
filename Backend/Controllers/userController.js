@@ -4,10 +4,35 @@ const jwt = require('jsonwebtoken')
 
 const userController = {
 
+    get: async (req, res) => {
+        const transporter = nodemailer.createTransport({
+            host: "smtp.ethereal.email",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+              user: testAccount.user, // generated ethereal user
+              pass: testAccount.pass, // generated ethereal password
+            },
+          });
+        
+         trasnporter.sendMail({
+            from: user,
+            to: user ,// dps add o usuario e n eu 
+            replyTo: "Canteco@example.com",
+            subject: "Welcome to Canteco App! ",
+            text: "Thanks for install the Canteco App"
+         }).them(info => {
+            res.send(info)
+         }).catch(error => {
+            res.send(error)
+         })
+    },
+
+   
     login: async (req, res) => {
-        /* 	#swagger.tags = ['User'] */
 
         const { email, password } = req.body
+        console.log(`email: ${email} password: ${password}`);
 
         // validations 
         if (!email) {
@@ -51,8 +76,6 @@ const userController = {
     },
 
     getById: async (req, res) => {
-        /* 	#swagger.tags = ['User'] */
-
         const id = req.params.id
 
         // deletes password
@@ -61,8 +84,9 @@ const userController = {
 
     },
 
+
+
     create: async (req, res) => {
-        /* 	#swagger.tags = ['User'] */
 
         const { name, email, password, userRole, comfirmPassword } = req.body
 
@@ -109,7 +133,6 @@ const userController = {
 
             } catch (error) {
                 console.log(error);
-
                 res.status(500).json({ msg: 'Server error. Try again' })
 
             }
@@ -117,7 +140,6 @@ const userController = {
     },
 
     delete: async (req, res) => {
-        /* 	#swagger.tags = ['User'] */
 
         try {
 
@@ -140,11 +162,12 @@ const userController = {
 
         } catch (error) {
             console.log(error);
+            res.status(500).json({ msg: "Internal Server Error" })
+
         }
     },
 
     update: async (req, res) => {
-        /* 	#swagger.tags = ['User'] */
 
         const id = req.params.id
 
@@ -183,7 +206,6 @@ const userController = {
             }
 
             // create password 
-
             //add extra digits to make the password more difficult to read
             const salt = await bcrypt.genSalt(12)
             const passwordHash = await bcrypt.hash(password, salt)
@@ -203,7 +225,7 @@ const userController = {
 
             } catch (error) {
                 console.log(error);
-                res.status(500).json({ msg: 'Some problem occured' })
+                res.status(500).json({ msg: "Internal Server Error" })
             }
         }
     }
