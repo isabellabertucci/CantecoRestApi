@@ -1,4 +1,4 @@
-const { Price } = require("../models/Price");
+const { Price: PriceModel , Price} = require("../models/Price");
 
 const priceController = {
 

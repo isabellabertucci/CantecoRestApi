@@ -35,12 +35,16 @@ const userController = {
         console.log(`email: ${email} password: ${password}`);
 
         // validations 
-        if (!email) {
+        if (!email && password) {
             return res.status(422).json({ msg: "Required Email" })
         }
 
-        if (!password) {
+        if (!password && email) {
             return res.status(422).json({ msg: "Required Password" })
+        }
+
+        if (!password && !email) {
+            return res.status(422).json({ msg: "Required Email and Password" })
         }
 
         // check if users exists
