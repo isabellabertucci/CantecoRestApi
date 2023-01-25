@@ -19,7 +19,7 @@ const options = {
         produces: ["application/json"],
         servers: [
             {
-                url: "http://localhost:3000",
+                url: "https://canteco-api.onrender.com",
             },
         ],
         securityDefinitions: {

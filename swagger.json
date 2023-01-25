@@ -8,7 +8,7 @@
             "email": "canteco@example.com"
         }
     },
-    "host": "localhost:3000",
+    "host": "https://canteco-api.onrender.com",
     "basePath": "/",
     "schemes": [
         "http"
@@ -295,13 +295,6 @@
                 "description": " Essa rota será responsavel por listar os itens existentes",
                 "tags": [
                     "Items"
-                ],
-                "parameters": [
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
-                    }
                 ],
                 "responses": {
                     "200": {

@@ -3,31 +3,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const userController = {
-
-    get: async (req, res) => {
-        const transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-              user: testAccount.user, // generated ethereal user
-              pass: testAccount.pass, // generated ethereal password
-            },
-          });
-        
-         trasnporter.sendMail({
-            from: user,
-            to: user ,// dps add o usuario e n eu 
-            replyTo: "Canteco@example.com",
-            subject: "Welcome to Canteco App! ",
-            text: "Thanks for install the Canteco App"
-         }).them(info => {
-            res.send(info)
-         }).catch(error => {
-            res.send(error)
-         })
-    },
-
    
     login: async (req, res) => {
 
