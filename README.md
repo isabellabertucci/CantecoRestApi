@@ -8,7 +8,7 @@ This API was specially created to be used in the [Canteco app](https://github.co
 
 In this API we have the full user authentication, and a CRUD for each collection as an example, the creation of food and meals in the database.
 
-For help in use,  has been created [online documentation](https://canteco-api.onrender.com/doc/), which offers tutorials, samples, guidelines for using the full API.
+For help in use,  has been created [online documentation](https://canteco-api.onrender.com/doc/) with Swagger, which offers tutorials, samples, guidelines for using the full API.
 
 # 
 
